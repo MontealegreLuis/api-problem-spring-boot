@@ -7,3 +7,10 @@ help: ## Show help
 format: ## Format code
 	@echo "Applying coding standards formatting..."
 	@./gradlew goJF
+
+.PHONY: check
+check: ## Run test suite
+	@echo "Running test suite..."
+	@./gradlew check
+	@echo "Running mutation test suite..."
+	@./gradlew pitest --info
