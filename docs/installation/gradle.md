@@ -29,4 +29,4 @@ Lastly, add the following entry to your `dependencies` in your `build.gradle` fi
 implementation 'com.montealegreluis:api-problem-spring-boot:1.0.0'
 ```
 
-Please find what the latest version is [here](https://github.com/MontealegreLuis/api-problem-spring-boot/packages/1264439).
+Please find what the latest version is [here](https://github.com/MontealegreLuis/api-problem-spring-boot/packages/1275243).
