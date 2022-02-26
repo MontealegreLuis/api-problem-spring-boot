@@ -8,6 +8,8 @@ plugins {
 group 'com.montealegreluis'
 version '1.0-SNAPSHOT'
 
+apply from: rootProject.file('hooks.gradle')
+
 repositories {
     mavenCentral()
     maven {

@@ -1,0 +1,5 @@
+task configureGitHooks(type: Exec) {
+  commandLine "npm", "install", "--only=prod"
+}
+
+compileJava.dependsOn configureGitHooks
