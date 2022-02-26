@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "semantic-release": "semantic-release",
     "prepare": "husky install",
     "commitlint": "commitlint --edit \"$1\""
   },
@@ -7,5 +8,11 @@
     "@commitlint/cli": "16.2.1",
     "@commitlint/config-conventional": "16.2.1",
     "husky": "7.0.4"
+  },
+  "devDependencies": {
+    "@semantic-release/git": "10.0.1",
+    "conventional-changelog-conventionalcommits": "4.6.3",
+    "gradle-semantic-release-plugin": "1.6.4",
+    "semantic-release": "19.0.2"
   }
 }
