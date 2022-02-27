@@ -1,3 +1,3 @@
 package com.montealegreluis.apiproblemspringboot.springboot;
 
-public interface APIProblemHandler extends ThrowableAdvice {}
+public interface ApiProblemHandler extends ThrowableAdvice {}
