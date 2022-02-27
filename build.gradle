@@ -49,7 +49,7 @@ publishing {
 dependencies {
     implementation 'org.springframework:spring-web:5.3.15'
     api 'com.montealegreluis:activity-feed:3.1.1'
-    api 'com.montealegreluis:api-problem:1.2.0'
+    api 'com.montealegreluis:api-problem:2.0.0'
     api 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'

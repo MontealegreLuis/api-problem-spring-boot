@@ -36,11 +36,11 @@ final class ApiProblemModuleTest {
             .withStatus(Status.BAD_REQUEST.code())
             .withType(Status.BAD_REQUEST.type())
             .withInstance(URI.create("https://example.org/out-of-stock"))
-            .withDetails("Item B00027Y5QG is no longer available")
+            .withDetail("Item B00027Y5QG is no longer available")
             .build();
 
     assertEquals(
-        "{\"title\":\"Out of Stock\",\"status\":400,\"type\":\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1\",\"details\":\"Item B00027Y5QG is no longer available\",\"instance\":\"https://example.org/out-of-stock\"}",
+        "{\"title\":\"Out of Stock\",\"status\":400,\"type\":\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1\",\"detail\":\"Item B00027Y5QG is no longer available\",\"instance\":\"https://example.org/out-of-stock\"}",
         mapper.writeValueAsString(problem));
   }
 
@@ -52,13 +52,13 @@ final class ApiProblemModuleTest {
             .withType(Status.BAD_REQUEST.type())
             .withStatus(Status.BAD_REQUEST.code())
             .withType(Status.BAD_REQUEST.type())
-            .withDetails("Item B00027Y5QG is no longer available")
+            .withDetail("Item B00027Y5QG is no longer available")
             .withInstance(URI.create("https://example.org/out-of-stock"))
             .with("product", "B00027Y5QG")
             .build();
 
     assertEquals(
-        "{\"title\":\"Out of Stock\",\"status\":400,\"type\":\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1\",\"details\":\"Item B00027Y5QG is no longer available\",\"instance\":\"https://example.org/out-of-stock\",\"product\":\"B00027Y5QG\"}",
+        "{\"title\":\"Out of Stock\",\"status\":400,\"type\":\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1\",\"detail\":\"Item B00027Y5QG is no longer available\",\"instance\":\"https://example.org/out-of-stock\",\"product\":\"B00027Y5QG\"}",
         mapper.writeValueAsString(problem));
   }
 

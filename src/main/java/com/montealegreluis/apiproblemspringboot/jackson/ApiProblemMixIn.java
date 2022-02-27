@@ -24,9 +24,9 @@ public interface ApiProblemMixIn extends Problem {
   @Override
   Integer getStatus();
 
-  @JsonProperty("details")
+  @JsonProperty("detail")
   @Override
-  String getDetails();
+  String getDetail();
 
   @JsonProperty("instance")
   @Override
