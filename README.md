@@ -20,7 +20,7 @@ It connects the [API Problem](https://github.com/MontealegreLuis/api-problem-spr
 
 ### Jackson Module for API Problems
 
-Make sure you register the module with your `ObjectMapper`:
+Make sure you register the `ApiProblemModule` with your `ObjectMapper`:
 
 ```java
 ObjectMapper mapper = new ObjectMapper()
@@ -57,6 +57,41 @@ class ProblemApiExceptionHandler implements ApiProblemHandler {
   @Override
   public ResponseEntity<ApiProblem> handleThrowable(Throwable exception) {
     return ApiProblem.witDefaultType(Status.INTERNAL_SERVER_ERROR);  
+  }
+}
+```
+
+### Logging
+
+Exceptions are logged using an [ActivityFeed](https://github.com/MontealegreLuis/activity-feed).
+There are a few extension points that you can use to customize the way exceptions are logged.
+
+An `ActivityFeed` is created for you by the default, but you can create your own
+
+```java
+@ControllerAdvice
+class ProblemApiExceptionHandler implements ApiProblemHandler {
+  @Override
+  public ActivityFeed feed() {
+      return new ActivityFeed(LoggerFactory.getLogger(YourApplication.class));
+  }
+}
+```
+
+You can also customize the `Activity` being logged
+
+```java
+@ControllerAdvice
+class ProblemApiExceptionHandler implements ApiProblemHandler {
+  @Override
+  void logThrowable(Throwable exception) {
+    final Activity activity =
+        error(
+            "internal-server-error",
+            "An error occurred: " + exception.getMessage(),
+            (context) -> context.put("exception", contextFrom(exception)));
+
+    log(activity);
   }
 }
 ```

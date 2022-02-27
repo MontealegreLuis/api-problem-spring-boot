@@ -19,6 +19,13 @@ repositories {
             password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
         }
     }
+    maven {
+        url = uri("https://maven.pkg.github.com/montealegreluis/activity-feed")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
+        }
+    }
 }
 
 publishing {
@@ -41,10 +48,13 @@ publishing {
 
 dependencies {
     implementation 'org.springframework:spring-web:5.3.15'
+    api 'com.montealegreluis:activity-feed:3.1.1'
     api 'com.montealegreluis:api-problem:1.2.0'
     api 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.mockito:mockito-core:4.3.1'
+    testImplementation 'net.logstash.logback:logstash-logback-encoder:7.0.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
