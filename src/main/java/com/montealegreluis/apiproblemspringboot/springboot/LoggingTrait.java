@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 public interface LoggingTrait {
   ActivityFeed feed = new ActivityFeed(LoggerFactory.getLogger(ApiProblemHandler.class));
 
-  default void log(Activity activity) {
+  default void log(final Activity activity) {
     feed().record(activity);
   }
 
