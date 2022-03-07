@@ -48,6 +48,7 @@ publishing {
 
 dependencies {
     implementation 'org.springframework:spring-web:5.3.15'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
     api 'com.montealegreluis:activity-feed:3.1.1'
     api 'com.montealegreluis:api-problem:2.0.0'
     api 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
