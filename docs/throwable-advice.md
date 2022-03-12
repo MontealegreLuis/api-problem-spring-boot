@@ -34,7 +34,7 @@ public void enhanceThrowableProblem(
 ```
 
 
-You can also completely override how `Throwable` objects are managed.
+You can also completely override how `Throwable` objects are handled.
 The example belows removes the exception information and the logging logic and only returns the response
 
 ```java
@@ -75,19 +75,20 @@ You can also customize the `Activity` being logged
 @ControllerAdvice
 class ProblemApiExceptionHandler implements ApiProblemHandler {
   @Override
-  public Activity createThrowableActivity(
-    Throwable exception, 
+  public ActivityBuilder builderForThrowableActivity(final Throwable exception) {
+    return anActivity()
+      .withIdentifier("internal-server-error")
+      .withMessage("An error occurred: " + exception.getMessage())  
+      .withException(exception);
+  }
+
+  @Override
+  public void enhanceThrowableProblemActivity(
+    ActivityBuilder builder, 
     ApiProblem problem, 
     NativeWebRequest request) {
-
-    return error(
-       "internal-server-error",
-       "An error occurred: " + exception.getMessage(),
-       (context) -> {
-         context.put("exception", contextFrom(exception));
-         context.put("code", problem.getAdditionalProperties().get("code"));
-         // you could also include information from the request
-       });
+    builder.with("code", problem.getAdditionalProperties().get("code"));
+    // You could also add information from the current request
   }
 }
 ```

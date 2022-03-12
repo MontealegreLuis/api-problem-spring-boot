@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.montealegreluis.activityfeed.Activity;
+import com.montealegreluis.activityfeed.ActivityBuilder;
 import com.montealegreluis.activityfeed.ActivityFeed;
 import com.montealegreluis.apiproblem.ApiProblem;
 import com.montealegreluis.apiproblem.ApiProblemBuilder;
@@ -129,15 +130,11 @@ final class ThrowableAdviceTest {
           }
 
           @Override
-          public Activity createThrowableActivity(
-              final Throwable exception, final ApiProblem problem, final NativeWebRequest request) {
-            return Activity.error(
-                "application-error",
-                exception.getMessage(),
-                (context) -> {
-                  context.put("exception", contextFrom(exception));
-                  context.put("code", problem.getAdditionalProperties().get("code"));
-                });
+          public void enhanceThrowableProblemActivity(
+              final ActivityBuilder builder,
+              final ApiProblem problem,
+              final NativeWebRequest request) {
+            builder.with("code", problem.getAdditionalProperties().get("code"));
           }
         };
 

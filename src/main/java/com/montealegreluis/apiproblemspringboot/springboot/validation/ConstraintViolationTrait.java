@@ -1,8 +1,9 @@
 package com.montealegreluis.apiproblemspringboot.springboot.validation;
 
+import static com.montealegreluis.activityfeed.ActivityBuilder.*;
 import static com.montealegreluis.apiproblem.ApiProblemBuilder.aProblem;
 
-import com.montealegreluis.activityfeed.Activity;
+import com.montealegreluis.activityfeed.ActivityBuilder;
 import com.montealegreluis.apiproblem.ApiProblem;
 import com.montealegreluis.apiproblem.ApiProblemBuilder;
 import com.montealegreluis.apiproblem.Status;
@@ -27,9 +28,11 @@ public interface ConstraintViolationTrait extends LoggingTrait, ProblemResponseT
 
     final ApiProblem problem = builder.build();
 
-    final Activity activity = createConstraintViolationActivity(exception, problem, request);
+    final ActivityBuilder activityBuilder = builderForConstraintViolationActivity(exception);
 
-    log(activity);
+    enhanceConstraintViolationActivity(activityBuilder, problem, request);
+
+    log(activityBuilder.build());
 
     return problemResponse(problem, HttpStatus.UNPROCESSABLE_ENTITY);
   }
@@ -52,13 +55,16 @@ public interface ConstraintViolationTrait extends LoggingTrait, ProblemResponseT
   default void enhanceConstraintViolationProblem(
       final ApiProblemBuilder builder, final NativeWebRequest request) {}
 
-  default Activity createConstraintViolationActivity(
-      final ConstraintViolationException exception,
-      final ApiProblem problem,
-      final NativeWebRequest request) {
-    return Activity.warning(
-        "invalid-input",
-        "Invalid input provided",
-        (context) -> context.put("errors", problem.getAdditionalProperties().get("errors")));
+  default ActivityBuilder builderForConstraintViolationActivity(
+      final ConstraintViolationException exception) {
+    return anActivity()
+        .warning()
+        .withIdentifier("invalid-input")
+        .withMessage("Invalid input provided");
+  }
+
+  default void enhanceConstraintViolationActivity(
+      final ActivityBuilder builder, final ApiProblem problem, final NativeWebRequest request) {
+    builder.with("errors", problem.getAdditionalProperties().get("errors"));
   }
 }

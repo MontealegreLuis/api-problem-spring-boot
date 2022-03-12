@@ -1,5 +1,6 @@
 package com.montealegreluis.apiproblemspringboot.springboot.validation;
 
+import static com.montealegreluis.activityfeed.ActivityBuilder.anActivity;
 import static com.montealegreluis.apiproblem.ApiProblemBuilder.aProblem;
 import static com.montealegreluis.apiproblem.Status.UNPROCESSABLE_ENTITY;
 import static net.logstash.logback.marker.Markers.appendEntries;
@@ -8,6 +9,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 import com.montealegreluis.activityfeed.Activity;
+import com.montealegreluis.activityfeed.ActivityBuilder;
 import com.montealegreluis.activityfeed.ActivityFeed;
 import com.montealegreluis.apiproblem.ApiProblem;
 import com.montealegreluis.apiproblem.ApiProblemBuilder;
@@ -121,17 +123,22 @@ final class ValidationAdviceTest {
           }
 
           @Override
-          public Activity createConstraintViolationActivity(
-              final ConstraintViolationException exception,
+          public ActivityBuilder builderForConstraintViolationActivity(
+              final ConstraintViolationException exception) {
+            return anActivity()
+                .warning()
+                .withIdentifier("validation-error")
+                .withMessage("Input didn't pass validation");
+          }
+
+          @Override
+          public void enhanceConstraintViolationActivity(
+              final ActivityBuilder builder,
               final ApiProblem problem,
               final NativeWebRequest request) {
-            return Activity.warning(
-                "validation-error",
-                "Input didn't pass validation",
-                (context) -> {
-                  context.put("errors", problem.getAdditionalProperties().get("errors"));
-                  context.put("code", problem.getAdditionalProperties().get("code"));
-                });
+            builder
+                .with("errors", problem.getAdditionalProperties().get("errors"))
+                .with("code", problem.getAdditionalProperties().get("code"));
           }
         };
 

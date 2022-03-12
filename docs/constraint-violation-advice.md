@@ -24,7 +24,7 @@ public void enhanceConstraintViolationProblem(
 }
 ```
 
-You can also completely override how `ConstraintViolationException` objects are managed.
+You can also completely override how `ConstraintViolationException` objects are handled.
 The example belows removes the exception information and the logging logic and only returns the response
 
 ```java
@@ -66,19 +66,22 @@ You can also customize the `Activity` being logged
 @ControllerAdvice
 class ProblemApiExceptionHandler implements ApiProblemHandler {
   @Override
-  public Activity createConstraintViolationActivity(
-    ConstraintViolationException exception, 
-    ApiProblem problem, 
-    NativeWebRequest request) {
+  public ActivityBuilder builderForConstraintViolationActivity(
+    final ConstraintViolationException exception) {
+      return anActivity()
+          .warning()
+          .withIdentifier("invalid-input")
+          .withMessage("An error occurred: " + exception.getMessage());
+  }
 
-    return error(
-       "invalid-input",
-       "An error occurred: " + exception.getMessage(),
-       (context) -> {
-         context.put("exception", contextFrom(exception));
-         context.put("code", problem.getAdditionalProperties().get("code"));
-         // you could also include information from the request
-       });
+  @Override
+  public void enhanceConstraintViolationActivity(
+    final ActivityBuilder builder, 
+    final ApiProblem problem, 
+    final NativeWebRequest request) {
+    
+    builder.with("code", problem.getAdditionalProperties().get("code"));
+    // you could also include information from the request
   }
 }
 ```

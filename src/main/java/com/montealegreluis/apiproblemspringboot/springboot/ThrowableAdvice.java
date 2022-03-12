@@ -1,11 +1,10 @@
 package com.montealegreluis.apiproblemspringboot.springboot;
 
-import static com.montealegreluis.activityfeed.Activity.error;
-import static com.montealegreluis.activityfeed.ExceptionContextFactory.contextFrom;
+import static com.montealegreluis.activityfeed.ActivityBuilder.anActivity;
 import static com.montealegreluis.apiproblem.ApiProblemBuilder.aProblem;
 import static com.montealegreluis.apiproblem.Status.INTERNAL_SERVER_ERROR;
 
-import com.montealegreluis.activityfeed.Activity;
+import com.montealegreluis.activityfeed.ActivityBuilder;
 import com.montealegreluis.apiproblem.ApiProblem;
 import com.montealegreluis.apiproblem.ApiProblemBuilder;
 import org.springframework.http.HttpStatus;
@@ -37,9 +36,11 @@ public interface ThrowableAdvice extends LoggingTrait, ProblemResponseTrait {
 
     final ApiProblem problem = builder.build();
 
-    final Activity throwableActivity = createThrowableActivity(exception, problem, request);
+    final ActivityBuilder activityBuilder = builderForThrowableActivity(exception);
 
-    log(throwableActivity);
+    enhanceThrowableProblemActivity(activityBuilder, problem, request);
+
+    log(activityBuilder.build());
 
     return problemResponse(problem, HttpStatus.INTERNAL_SERVER_ERROR);
   }
@@ -68,20 +69,21 @@ public interface ThrowableAdvice extends LoggingTrait, ProblemResponseTrait {
   default void enhanceThrowableProblem(
       final ApiProblemBuilder builder, final NativeWebRequest nativeRequest) {}
 
-  /**
-   * Override this method if you need to choose a log level for your logging event and to log
-   * additional information beside the exception itself
-   *
-   * <p>You can use the problem to be returned as response, and the original HTTP request to enhance
-   * your logging event
-   */
-  default Activity createThrowableActivity(
-      final Throwable exception, final ApiProblem problem, final NativeWebRequest request) {
-    return error(
-        "application-error",
-        exception.getMessage(),
-        (context) -> context.put("exception", contextFrom(exception)));
+  /** Override this method if you need create your activity from scratch */
+  default ActivityBuilder builderForThrowableActivity(final Throwable exception) {
+    return anActivity()
+        .error()
+        .withIdentifier("application-error")
+        .withMessage(exception.getMessage())
+        .withException(exception);
   }
+
+  /**
+   * Override this method to use the problem to be returned as response, and the original HTTP
+   * request to enhance your logging event
+   */
+  default void enhanceThrowableProblemActivity(
+      final ActivityBuilder builder, final ApiProblem problem, final NativeWebRequest request) {}
 
   /**
    * Override this method if you want to conditionally determine when include an exception in a
