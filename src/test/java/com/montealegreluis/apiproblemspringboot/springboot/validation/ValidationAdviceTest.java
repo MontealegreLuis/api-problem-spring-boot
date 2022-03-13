@@ -13,15 +13,13 @@ import com.montealegreluis.activityfeed.ActivityBuilder;
 import com.montealegreluis.activityfeed.ActivityFeed;
 import com.montealegreluis.apiproblem.ApiProblem;
 import com.montealegreluis.apiproblem.ApiProblemBuilder;
+import com.montealegreluis.apiproblemspringboot.validation.RequiredValueConstraintViolation;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-import javax.validation.metadata.ConstraintDescriptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -174,78 +172,4 @@ final class ValidationAdviceTest {
 
   private ConstraintViolationException constraintViolationException;
   private HashMap<String, String> errors;
-
-  private static class RequiredValueConstraintViolation implements ConstraintViolation<String> {
-
-    private final String propertyPath;
-
-    public RequiredValueConstraintViolation(String propertyPath) {
-      this.propertyPath = propertyPath;
-    }
-
-    @Override
-    public String getMessage() {
-      return "value is required";
-    }
-
-    @Override
-    public Path getPropertyPath() {
-      return new Path() {
-        @Override
-        public Iterator<Node> iterator() {
-          return null;
-        }
-
-        @Override
-        public String toString() {
-          return propertyPath;
-        }
-      };
-    }
-
-    @Override
-    public String getMessageTemplate() {
-      return null;
-    }
-
-    @Override
-    public String getRootBean() {
-      return null;
-    }
-
-    @Override
-    public Class<String> getRootBeanClass() {
-      return null;
-    }
-
-    @Override
-    public Object getLeafBean() {
-      return null;
-    }
-
-    @Override
-    public Object[] getExecutableParameters() {
-      return new Object[0];
-    }
-
-    @Override
-    public Object getExecutableReturnValue() {
-      return null;
-    }
-
-    @Override
-    public Object getInvalidValue() {
-      return null;
-    }
-
-    @Override
-    public ConstraintDescriptor<?> getConstraintDescriptor() {
-      return null;
-    }
-
-    @Override
-    public <U> U unwrap(Class<U> type) {
-      return null;
-    }
-  }
 }
