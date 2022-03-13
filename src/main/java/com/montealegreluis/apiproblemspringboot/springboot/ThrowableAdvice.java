@@ -51,7 +51,10 @@ public interface ThrowableAdvice extends LoggingTrait, ProblemResponseTrait {
    */
   default ApiProblemBuilder builderForThrowable(final Throwable exception) {
     final ApiProblemBuilder builder =
-        aProblem().from(INTERNAL_SERVER_ERROR).withDetail(exception.getMessage());
+        aProblem()
+            .from(INTERNAL_SERVER_ERROR)
+            .withDetail(exception.getMessage())
+            .with("code", "application-error");
 
     if (includeStackTrace()) {
       builder.withException(exception);

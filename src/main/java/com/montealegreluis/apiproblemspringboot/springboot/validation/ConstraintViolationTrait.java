@@ -49,6 +49,7 @@ public interface ConstraintViolationTrait extends LoggingTrait, ProblemResponseT
     return aProblem()
         .from(Status.UNPROCESSABLE_ENTITY)
         .withDetail("Invalid input provided")
+        .with("code", "invalid-input")
         .with("errors", errors);
   }
 

@@ -31,7 +31,9 @@ final class ThrowableAdviceTest {
     assertEquals(INTERNAL_SERVER_ERROR.code(), apiProblem.getStatus());
     assertEquals(INTERNAL_SERVER_ERROR.reason(), apiProblem.getTitle());
     assertEquals(INTERNAL_SERVER_ERROR.type(), apiProblem.getType());
-    assertEquals(0, apiProblem.getAdditionalProperties().size());
+    assertEquals(1, apiProblem.getAdditionalProperties().size());
+    assertTrue(apiProblem.getAdditionalProperties().containsKey("code"));
+    assertEquals("application-error", apiProblem.getAdditionalProperties().get("code"));
   }
 
   @Test
@@ -51,8 +53,10 @@ final class ThrowableAdviceTest {
     assertEquals(INTERNAL_SERVER_ERROR.code(), apiProblem.getStatus());
     assertEquals(INTERNAL_SERVER_ERROR.reason(), apiProblem.getTitle());
     assertEquals(INTERNAL_SERVER_ERROR.type(), apiProblem.getType());
-    assertEquals(1, apiProblem.getAdditionalProperties().size());
+    assertEquals(2, apiProblem.getAdditionalProperties().size());
     assertTrue(apiProblem.getAdditionalProperties().containsKey("exception"));
+    assertTrue(apiProblem.getAdditionalProperties().containsKey("code"));
+    assertEquals("application-error", apiProblem.getAdditionalProperties().get("code"));
   }
 
   @Test

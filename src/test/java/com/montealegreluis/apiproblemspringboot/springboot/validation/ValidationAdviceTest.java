@@ -38,7 +38,9 @@ final class ValidationAdviceTest {
     assertEquals(UNPROCESSABLE_ENTITY.code(), apiProblem.getStatus());
     assertEquals(UNPROCESSABLE_ENTITY.reason(), apiProblem.getTitle());
     assertEquals(UNPROCESSABLE_ENTITY.type(), apiProblem.getType());
-    assertEquals(1, apiProblem.getAdditionalProperties().size());
+    assertEquals(2, apiProblem.getAdditionalProperties().size());
+    assertTrue(apiProblem.getAdditionalProperties().containsKey("code"));
+    assertEquals("invalid-input", apiProblem.getAdditionalProperties().get("code"));
     assertTrue(apiProblem.getAdditionalProperties().containsKey("errors"));
     assertInstanceOf(Map.class, apiProblem.getAdditionalProperties().get("errors"));
     @SuppressWarnings("unchecked")
