@@ -118,7 +118,9 @@ final class ValidationAdviceTest {
 
           @Override
           public void enhanceConstraintViolationProblem(
-              final ApiProblemBuilder builder, final NativeWebRequest nativeRequest) {
+              final ApiProblemBuilder builder,
+              final ConstraintViolationException exception,
+              final NativeWebRequest nativeRequest) {
             builder.with("code", "unprocessable-entity");
           }
 

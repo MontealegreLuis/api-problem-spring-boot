@@ -16,7 +16,8 @@ class ProblemApiExceptionHandler implements ApiProblemHandler {
 You can also override how the API problem is built
 
 ```java
-public ApiProblemBuilder builderForThrowable(Throwable exception) {
+public ApiProblemBuilder builderForThrowable(
+    final Throwable exception) {
   return aProblem().from(INTERNAL_SERVER_ERROR);
 }
 ```
@@ -25,8 +26,9 @@ You can include additional information from the current request to your API Prob
 
 ```java
 public void enhanceThrowableProblem(
-    ApiProblemBuilder builder, 
-    NativeWebRequest nativeRequest) {
+    final ApiProblemBuilder builder,
+    final Throwable exception,
+    final NativeWebRequest nativeRequest) {
 
     // Add more information to your Problem instance
     // builder.with("value", ...);
@@ -75,7 +77,8 @@ You can also customize the `Activity` being logged
 @ControllerAdvice
 class ProblemApiExceptionHandler implements ApiProblemHandler {
   @Override
-  public ActivityBuilder builderForThrowableActivity(final Throwable exception) {
+  public ActivityBuilder builderForThrowableActivity(
+      final Throwable exception) {
     return anActivity()
       .withIdentifier("internal-server-error")
       .withMessage("An error occurred: " + exception.getMessage())  
@@ -84,9 +87,9 @@ class ProblemApiExceptionHandler implements ApiProblemHandler {
 
   @Override
   public void enhanceThrowableProblemActivity(
-    ActivityBuilder builder, 
-    ApiProblem problem, 
-    NativeWebRequest request) {
+    final ActivityBuilder builder, 
+    final ApiProblem problem, 
+    final NativeWebRequest request) {
     builder.with("code", problem.getAdditionalProperties().get("code"));
     // You could also add information from the current request
   }

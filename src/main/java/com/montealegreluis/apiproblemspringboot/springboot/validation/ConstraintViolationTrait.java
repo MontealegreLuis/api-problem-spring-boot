@@ -24,7 +24,7 @@ public interface ConstraintViolationTrait extends LoggingTrait, ProblemResponseT
       final ConstraintViolationException exception, final NativeWebRequest request) {
     final ApiProblemBuilder builder = builderForConstraintViolation(exception);
 
-    enhanceConstraintViolationProblem(builder, request);
+    enhanceConstraintViolationProblem(builder, exception, request);
 
     final ApiProblem problem = builder.build();
 
@@ -54,7 +54,9 @@ public interface ConstraintViolationTrait extends LoggingTrait, ProblemResponseT
   }
 
   default void enhanceConstraintViolationProblem(
-      final ApiProblemBuilder builder, final NativeWebRequest request) {}
+      final ApiProblemBuilder builder,
+      final ConstraintViolationException exception,
+      final NativeWebRequest request) {}
 
   default ActivityBuilder builderForConstraintViolationActivity(
       final ConstraintViolationException exception) {

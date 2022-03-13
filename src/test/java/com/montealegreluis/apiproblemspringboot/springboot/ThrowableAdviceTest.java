@@ -129,7 +129,9 @@ final class ThrowableAdviceTest {
 
           @Override
           public void enhanceThrowableProblem(
-              final ApiProblemBuilder builder, final NativeWebRequest nativeRequest) {
+              final ApiProblemBuilder builder,
+              final Throwable exception,
+              final NativeWebRequest nativeRequest) {
             builder.with("code", "internal-server-error");
           }
 

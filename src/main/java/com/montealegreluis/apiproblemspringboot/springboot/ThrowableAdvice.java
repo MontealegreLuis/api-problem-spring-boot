@@ -32,7 +32,7 @@ public interface ThrowableAdvice extends LoggingTrait, ProblemResponseTrait {
       final Throwable exception, final NativeWebRequest request) {
     final ApiProblemBuilder builder = builderForThrowable(exception);
 
-    enhanceThrowableProblem(builder, request);
+    enhanceThrowableProblem(builder, exception, request);
 
     final ApiProblem problem = builder.build();
 
@@ -70,7 +70,9 @@ public interface ThrowableAdvice extends LoggingTrait, ProblemResponseTrait {
    * Problem response
    */
   default void enhanceThrowableProblem(
-      final ApiProblemBuilder builder, final NativeWebRequest nativeRequest) {}
+      final ApiProblemBuilder builder,
+      final Throwable exception,
+      final NativeWebRequest nativeRequest) {}
 
   /** Override this method if you need create your activity from scratch */
   default ActivityBuilder builderForThrowableActivity(final Throwable exception) {

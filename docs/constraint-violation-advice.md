@@ -16,8 +16,9 @@ You can include additional information from the current request to your API Prob
 
 ```java
 public void enhanceConstraintViolationProblem(
-    ApiProblemBuilder builder, 
-    NativeWebRequest nativeRequest) {
+    final ApiProblemBuilder builder,
+    final ConstraintViolationException exception,
+    final NativeWebRequest nativeRequest) {
 
     // Add more information to your Problem instance
     // builder.with("value", ...);
