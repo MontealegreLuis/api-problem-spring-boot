@@ -50,8 +50,8 @@ publishing {
 dependencies {
     api 'org.springframework:spring-web:5.3.16'
     api 'javax.validation:validation-api:2.0.1.Final'
-    api 'com.montealegreluis:activity-feed:4.0.0'
-    api 'com.montealegreluis:api-problem:2.0.0'
+    api "com.montealegreluis:activity-feed:${activityFeedVersion}"
+    api "com.montealegreluis:api-problem:${apiProblemVersion}"
     api 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
