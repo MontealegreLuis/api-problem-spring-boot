@@ -4,7 +4,7 @@
 [![Release workflow](https://github.com/montealegreluis/api-problem-spring-boot/actions/workflows/release.yml/badge.svg)](https://github.com/montealegreluis/api-problem-spring-boot/actions/workflows/release.yml)
 [![semantic-release: conventional-commits](https://img.shields.io/badge/semantic--release-conventionalcommits-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
-*API Problem Spring Boot* is a package that makes it easy to produce
+*API Problem Spring Boot* makes it easy to produce
 [`application/problem+json`](http://tools.ietf.org/html/rfc7807) responses in a Spring Boot
 application.
 It connects the [API Problem](https://github.com/MontealegreLuis/api-problem-spring-boot) package and
@@ -39,7 +39,9 @@ class ProblemApiExceptionHandler implements ApiProblemHandler {
 
 All default behaviour can be customized or overriden as explained in the entries below. 
 
-- [Constraint Violation Advice](docs/constraint-violation-advice.md)
+- Validation Advice
+  - [Constraint Violation](docs/constraint-violation-advice.md)
+  - [Method Argument Not Valid](docs/method-argument-not-valid-advice.md)
 - [Throwable Advice](docs/throwable-advice.md)
 
 ## Contribute

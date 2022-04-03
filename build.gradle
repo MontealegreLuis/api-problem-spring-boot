@@ -53,6 +53,7 @@ dependencies {
     api "com.montealegreluis:activity-feed:${activityFeedVersion}"
     api "com.montealegreluis:api-problem:${apiProblemVersion}"
     api 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+    implementation 'org.springframework:spring-context:5.3.17'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.mockito:mockito-core:4.3.1'
